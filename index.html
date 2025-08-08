@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicBrawlCN - 魔法乱斗中文社区</title>
+    <link rel="icon" href="icon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Paytone+One&family=Open+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6600;
+            --secondary: #FFCC00;
+            --accent: #FF3399;
+            --dark: #2A0E4C;
+            --light: #F5F5F5;
+            --danger: #FF3333;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, var(--dark), #4A235A);
+            color: var(--light);
+            line-height: 1.6;
+            background-attachment: fixed;
+        }
+
+        /* 游戏主题头部样式 */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 120px 20px 80px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200"><rect fill="none" width="200" height="200"/><path fill="%23FF6600" d="M34.6,-41.8C47.5,-35.6,62.1,-27.5,65.1,-14.4C68.1,-1.4,59.5,16.6,49.4,31.5C39.4,46.3,27.9,58,13.3,66.5C-1.2,75.1,-18,80.5,-30.2,74.8C-42.4,69.2,-50.1,52.5,-57.5,35.8C-64.8,19.1,-71.7,2.5,-68.5,-11.7C-65.3,-25.8,-52,-37.6,-38.1,-43.3C-24.3,-49.1,-9.7,-48.7,3.3,-52.3C16.3,-55.8,21.8,-63.2,34.6,-41.8Z" transform="translate(100 100)" /></svg>');
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top center, rgba(255, 102, 0, 0.4) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .game-logo {
+            font-family: 'Paytone One', sans-serif;
+            font-size: 5rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow:
+                0 0 10px var(--accent),
+                0 0 20px rgba(255, 255, 255, 0.5),
+                3px 3px 0 rgba(0, 0, 0, 0.2);
+            letter-spacing: 3px;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .game-logo:after {
+            content: 'CN';
+            position: absolute;
+            top: -15px;
+            right: -25px;
+            font-size: 1.5rem;
+            color: var(--primary);
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--light);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 36px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.3);
+            background: linear-gradient(to right, var(--accent), var(--primary));
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+
+        /* 社区特色区域 */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 5px;
+            margin: 10px auto 0;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .feature-content {
+            padding: 30px;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        /* 英雄展示区域 */
+        .characters {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .character {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .character:hover {
+            transform: scale(1.05);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(255, 51, 153, 0.4);
+            background: rgba(255, 51, 153, 0.1);
+        }
+
+        .character-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* 加入社区区域 */
+        .join-community {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            color: white;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-link:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            padding: 50px 20px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 80px;
+            position: relative;
+        }
+
+        footer:before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23000" fill-opacity="0.3" d="M0,128L48,117.3C96,107,192,85,288,96C384,107,480,149,576,165.3C672,181,768,171,864,154.7C960,139,1056,117,1152,117.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: 100% 100%;
+        }
+
+        .legal {
+            max-width: 800px;
+            margin: 30px auto 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .game-logo {
+                font-size: 3.5rem;
+            }
+
+            .tagline {
+                font-size: 1.4rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 英雄区 -->
+    <div class="hero">
+        <h1 class="game-logo">MagicBrawl</h1>
+        <p class="tagline">魔法乱斗中文社区</p>
+
+    </div>
+
+    <!-- 社区特色 -->
+    <section class="features">
+        <h2 class="section-title">我可以收获什么</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">怀旧赛季</h3>
+                    <p>带来不同的体验，目前游戏为17(游客中心之谜)赛季</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">交友开黑</h3>
+                    <p>收获很多的朋友，我们都是和谐且友好的</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">皮肤 - 表情</h3>
+                    <p>MagicBrawl不存在绝版的说法，任何皮肤都是可以在任何时间获取的。商店有时候会欺骗你！</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">自制内容</h3>
+                    <p>MagicBrawl有时会推出自制的表情和皮肤，这个版本甚至推出了一位自制英雄！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">点击下载</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="feature-content">
+                    <div>
+                        <a class="feature-title" href="https://files.magic-servers.xyz/mb.apk">原版-安卓版</a>
+                    </div>
+                    <p>未经过群友魔改的版本，原汁原味</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="feature-content">
+                    <a class="feature-title" href="https://files.magic-servers.xyz/mb.ipa">原版-iOS版</a>
+                    <p>未经过群友魔改的版本，原汁原味</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="feature-content">
+                    <a class="feature-title" href="https://magicbrawl.gg/">俄罗斯官网</a>
+                    <p>MagicBrawl的真正官网，本站与MagicBrawl无直接关系</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">魔改版</h3>
+                    <p>请参阅下方进群获取</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加入社区 -->
+    <section id="join" class="features">
+        <h2 class="section-title">加入我们</h2>
+
+        <div class="social-links">
+            <a href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=996910542&card_type=group&source=external"
+                class="social-link" title="QQ群">
+                <i class="fab fa-qq"></i>
+            </a>
+        </div>
+    </section>
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2025 MagicBrawlCN 魔法乱斗中文社区</p>
+        <p class="legal">
+            MagicBrawlCN 是为《Magic Brwal》游戏爱好者创建的独立社区，与游戏开发商 Supercell 和 MagicBrawl俄罗斯官方 无直接关联。
+            Supercell 及 BrawlStars 是 Supercell 的注册商标。
+        </p>
+    </footer>
+</body>
+
+</html>
